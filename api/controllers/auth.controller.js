@@ -17,7 +17,7 @@ export const signup = async (req, res, next) => {
 
 export const google = async (req, res, next) => {
   try {
-    let user = await User.findOne({ email: req.body.email });
+    const user = await User.findOne({ email: req.body.email });
 
     if (user) {
       const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
