@@ -139,7 +139,6 @@ export default function Profile() {
       </div>
       {error && <p className="text-red-500 mt-5">{error}</p>}
       <p className="text-green-700 mt-5">
-        {" "}
         {updateSuccess ? "User is updated successfully" : ""}
       </p>
     </div>
