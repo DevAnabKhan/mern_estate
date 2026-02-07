@@ -12,14 +12,25 @@ import {
   FaShare,
   FaMapMarkerAlt,
 } from "react-icons/fa";
+import { useSelector } from "react-redux";
+import Contact from "../components/Contact";
 
 export default function Listing() {
   SwiperCore.use([Navigation]);
+  const { currentUser } = useSelector((state) => state.user);
   const [listing, setListing] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [contact, setContact] = useState(false);
   const params = useParams();
+
+  console.log(
+    "currentUser:",
+    currentUser?._id,
+    "listing userRef:",
+    listing?.userRef,
+  );
 
   useEffect(() => {
     const fetchListing = async () => {
@@ -40,6 +51,7 @@ export default function Listing() {
         setListing(data);
         setLoading(false);
         setError(false);
+        //console.log(listing.userRef);
       } catch (err) {
         setLoading(false);
         setError(true);
@@ -93,8 +105,8 @@ export default function Listing() {
             )}
           </div>
 
-          <div className="w-full flex justify-center">
-            <div className="flex flex-col max-w-8xl mx-auto p-3 gap-4">
+          <div className=" flex justify-center">
+            <div className="flex flex-col max-w-4xl mx-auto p-3 gap-4">
               <p className="text-2xl font-semibold">
                 {listing.name} - $
                 {listing.offer
@@ -117,7 +129,7 @@ p-1 rounded-md"
                 </p>
                 {listing.offer && (
                   <p
-                    className="bg-red-900 w-full max-w-[200px] text-white text-center
+                    className="bg-green-900 w-full max-w-[200px] text-white text-center
 p-1 rounded-md"
                   >
                     ${+listing.regularPrice - +listing.discountedPrice}
@@ -150,6 +162,17 @@ p-1 rounded-md"
                   {listing.furnished ? `Furnished` : `Unfurnished`}
                 </li>
               </ul>
+              {currentUser &&
+                listing.userRef.toString() !== currentUser._id.toString() &&
+                !contact && (
+                  <button
+                    onClick={() => setContact(true)}
+                    className="bg-slate-700 text-white rounded-lg p-3 uppercase hover:opacity-95"
+                  >
+                    Contact landlord
+                  </button>
+                )}
+              {contact && <Contact listing={listing} />}
             </div>
           </div>
         </div>
