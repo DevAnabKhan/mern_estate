@@ -25,13 +25,6 @@ export default function Listing() {
   const [contact, setContact] = useState(false);
   const params = useParams();
 
-  console.log(
-    "currentUser:",
-    currentUser?._id,
-    "listing userRef:",
-    listing?.userRef,
-  );
-
   useEffect(() => {
     const fetchListing = async () => {
       try {
