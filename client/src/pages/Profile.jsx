@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { storage, account, ID } from "../appwrite/appwriteConfig";
 import { useDispatch } from "react-redux";
 import {
   updateUserFailure,
@@ -14,14 +15,19 @@ import {
 } from "../redux/user/userSlice";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { useRef } from "react";
 
 export default function Profile() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const fileRef = useRef();
   const { currentUser, loading, error } = useSelector((state) => state.user);
-  console.log("currentUser");
-  console.log(currentUser);
+  const [file, setFile] = useState(undefined);
+
+  const [imageUploading, setImageUploading] = useState(false);
+
   const [formData, setFormData] = useState({});
+  console.log(formData);
   const [updateSuccess, setupdateSuccess] = useState(false);
   const [showListingError, setShowListingError] = useState(false);
   const [userListings, setUserListings] = useState([]);
@@ -34,7 +40,6 @@ export default function Profile() {
     e.preventDefault();
     try {
       dispatch(updateUserStart());
-      console.log(currentUser._id);
       const res = await fetch(`/api/user/update/${currentUser._id}`, {
         method: "POST",
         headers: {
@@ -48,8 +53,7 @@ export default function Profile() {
         return;
       }
       dispatch(updateUserSuccess(data));
-      //navigate("/");
-      console.log(data);
+
       setupdateSuccess(true);
     } catch (error) {
       dispatch(updateUserFailure(error.message));
@@ -59,7 +63,6 @@ export default function Profile() {
   const handleDeleteUser = async () => {
     try {
       dispatch(deleteUserStart());
-      console.log(currentUser._id);
       const res = await fetch(`/api/user/delete/${currentUser._id}`, {
         method: "DELETE",
       });
@@ -78,7 +81,6 @@ export default function Profile() {
   const handleSignOut = async () => {
     try {
       dispatch(signOutUserStart());
-      console.log(currentUser._id);
       const res = await fetch(`/api/auth/signout`);
       const data = await res.json();
       if (data.success === false) {
@@ -97,7 +99,6 @@ export default function Profile() {
       setShowListingError(false);
       const res = await fetch(`/api/user/listings/${currentUser._id}`);
       const data = await res.json();
-      console.log(data);
       if (data.success === false) {
         setShowListingError(true);
         return;
@@ -116,7 +117,6 @@ export default function Profile() {
       });
       const data = await res.json();
       if (data.success === false) {
-        console.log(data.message);
         return;
       }
       setUserListings((prev) =>
@@ -127,16 +127,71 @@ export default function Profile() {
     }
   };
 
+  useEffect(() => {
+    if (file) {
+      handleFileUpload(file);
+    }
+  }, [file]);
+
+  const handleFileUpload = async (file) => {
+    try {
+      setImageUploading(true);
+
+      try {
+        await account.getSession("current");
+      } catch {
+        await account.createAnonymousSession();
+      }
+
+      const uploadedFile = await storage.createFile(
+        import.meta.env.VITE_APPWRITE_BUCKET_ID,
+        ID.unique(),
+        file,
+      );
+
+      const fileUrl = storage.getFileView(
+        uploadedFile.bucketId,
+        uploadedFile.$id,
+      );
+      console.log(fileUrl);
+      setFormData((prev) => ({ ...prev, avatar: fileUrl }));
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setImageUploading(false);
+    }
+  };
+
   return (
     <div className="p-3 max-w-lg mx-auto">
       <h1 className="text-3xl font-semibold text-center my-7">Profile</h1>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        <img
-          src={currentUser.avatar}
-          alt="profile"
-          referrerPolicy="no-referrer"
-          className="self-center mt-2 rounded-full h-24 w-24 object-contain cursor-no-drop"
+        <input
+          onChange={(e) => setFile(e.target.files[0])}
+          type="file"
+          ref={fileRef}
+          hidden
+          accept="image/*"
         />
+        <div
+          className="relative self-center mt-2 h-24 w-24"
+          onClick={() => !imageUploading && fileRef.current.click()}
+        >
+          <img
+            src={formData.avatar || currentUser.avatar}
+            alt="profile"
+            referrerPolicy="no-referrer"
+            className={`rounded-full h-24 w-24 object-cover ${
+              imageUploading ? "opacity-50" : "cursor-pointer"
+            }`}
+          />
+
+          {imageUploading && (
+            <div className="absolute inset-0 flex items-center justify-center rounded-full bg-black/40">
+              <div className="h-6 w-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
+            </div>
+          )}
+        </div>
 
         <input
           type="text"
