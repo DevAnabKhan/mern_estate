@@ -121,7 +121,7 @@ export default function Search() {
     const startIndex = numberOfListings;
     const urlparams = new URLSearchParams(location.search);
     urlparams.set("startIndex", startIndex);
-    const searchQuery = await fetch(`/api/listings/get?${searchQuery}`);
+    const searchQuery = await fetch(`/api/listing/get?${searchQuery}`);
     const data = await res.json();
     if (data.length < 9) {
       setShowMore(false);
