@@ -1,9 +1,11 @@
 # 🏡 MERN Estate Project
 
 [![Frontend](https://img.shields.io/badge/Frontend-React-blue)](https://reactjs.org/)
-[![Backend](https://img.shields.io/badge/Backend-Node.js-green)](https://nodejs.org/)
-[![Database](https://img.shields.io/badge/Database-MongoDB-brightgreen)](https://www.mongodb.com/)
-[![Storage](https://img.shields.io/badge/Storage-Appwrite-orange)](https://appwrite.io/)
+[![Backend](https://img.shields.io/badge/Runtime-Node.js-green)](https://nodejs.org/)
+[![API](https://img.shields.io/badge/API-Express-orange)](https://expressjs.com/)
+[![Database](https://img.shields.io/badge/Database-MongoDB-yellow)](https://www.mongodb.com/)
+[![Authentication](https://img.shields.io/badge/Auth-Firebase-brown)](https://firebase.google.com/)
+[![Storage](https://img.shields.io/badge/Storage-Appwrite-purple)](https://appwrite.io/)
 
 A full-stack **real estate marketplace application** built with the **MERN stack** and **Appwrite for file storage**, allowing users to register, create listings with images, manage profiles, and explore property listings.  
 
@@ -58,16 +60,18 @@ MERN Estate is a **real estate management system** for buyers and sellers, offer
 
 ## 🖼 Screenshots
 
-### 1. Profile Page
-![Profile Page](./screenshots/profile.png)
-
-### 2. Create Listing
-![Create Listing](./screenshots/create-listing.png)
-
-### 3. Listings Page
-![Listings Page](./screenshots/listings.png)
-
-> Replace screenshots with your actual images from `client/src/assets` or live frontend.
+🏡 Home Page
+<p align="center"> <img src="./screenshots/home_page_1.png" width="180" alt="Home Page 1" /> <img src="./screenshots/home_page_2.png" width="180" alt="Home Page 2" /> <img src="./screenshots/home_page_3.png" width="180" alt="Home Page 3" /> <img src="./screenshots/home_page_4.png" width="180" alt="Home Page 4" /> </p> <p align="center"> <em>Responsive home page showcasing featured listings and navigation.</em> </p>
+🏠 Create Listing
+<p align="center"> <img src="./screenshots/create_listing_1.png" width="200" alt="Create Listing 1" /> <img src="./screenshots/create_listing_2.png" width="200" alt="Create Listing 2" /> <img src="./screenshots/create_listing_3.png" width="200" alt="Create Listing 3" /> </p> <p align="center"> <em>Step-by-step listing creation with image uploads, pricing, and property details.</em> </p>
+📋 Listings Page
+<p align="center"> <img src="./screenshots/listing_page_1.png" width="200" alt="Listings Page 1" /> <img src="./screenshots/listing_page_2.png" width="200" alt="Listings Page 2" /> <img src="./screenshots/listing_page.png" width="200" alt="Listings Page 3" /> </p> <p align="center"> <em>Dynamic property listings fetched from MongoDB with images stored on Appwrite.</em> </p>
+🧾 Search Listing Page
+<p align="center"> <img src="./screenshots/listing_page.png" width="200" alt="Search Listing Page" /> </p> <p align="center"> <em> Allowing users to search listing based on rent, sale, offer, furnished, parking, discount price, regular price, latest and oldest . </em> </p>
+🧑 Profile Page
+<p align="center"> <img src="./screenshots/profile_page.png" width="200" alt="Profile Page" /> </p> <p align="center"> <em> User profile page allowing users to view and update their personal information, including profile image upload using Appwrite Storage. Authentication state is managed via Redux and JWT. </em> </p>
+ℹ️ About Page
+<p align="center"> <img src="./screenshots/about_page.png" width="200" alt="About Page" /> </p> <p align="center"> <em> Informational page describing the purpose of the platform, its features, and overall vision. Built as a static React component with a clean and responsive layout. </em> </p>
 
 ---
 
