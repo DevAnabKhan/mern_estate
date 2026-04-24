@@ -152,16 +152,3 @@ Managing environment variables securely with dotenv.
 
 Styling with TailwindCSS for responsive design.
 
-✅ Planned Features
-
-Display uploaded images in listings with carousel.
-
-Real-time upload progress on frontend.
-
-Filter and search listings by type, price, and location.
-
-User dashboard to manage listings.
-
-Full CRUD operations for listings.
-
-Better error handling & notifications on frontend.
