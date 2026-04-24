@@ -124,8 +124,6 @@ client/
 
 🛠 Debugging / Notes
 
-Extensive use of console logs to track backend API flow and Appwrite file uploads.
-
 CORS issues resolved using cors middleware on backend.
 
 Solved Appwrite file upload issue: File not found in payload by wrapping buffer with Uint8Array.
